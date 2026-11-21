@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "sethome",
+  "version": "${version}",
+  "name": "Homes+",
+  "description": "Set a default home with /sethome and /home, plus named homes, /listhomes and /delhome. Unofficial Fabric 26.2/26.3 port of CornDawgCoco's MIT-licensed SetHome, with multi-home features by VashaTS.",
+  "authors": [
+    "CornDawgCoco",
+    "VashaTS"
+  ],
+  "contact": {
+    "homepage": "https://modrinth.com/mod/homesplus",
+    "sources": "https://github.com/VashaTS/homesplus",
+    "issues": "https://github.com/VashaTS/homesplus/issues"
+  },
+  "license": "MIT",
+  "icon": "assets/sethome/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.sethome.SetHomeMod"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "fabric-api": "*",
+    "minecraft": [
+      "~26.2",
+      "~26.3"
+    ]
+  }
+}

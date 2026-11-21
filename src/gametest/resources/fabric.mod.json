@@ -1,0 +1,15 @@
+{
+	"schemaVersion": 1,
+	"id": "sethome-test",
+	"version": "1.0.0",
+	"name": "SetHome tests",
+	"environment": "*",
+	"entrypoints": {
+		"fabric-gametest": [
+			"com.sethome.test.SetHomeGameTest"
+		]
+	},
+	"depends": {
+		"sethome": "*"
+	}
+}
