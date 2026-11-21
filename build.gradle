@@ -45,7 +45,7 @@ fabricApi {
 		modId = 'sethome-test'
 		eula = true
 		enableGameTests = true
-		enableClientGameTests = false
+		enableClientGameTests = true
 	}
 }
 

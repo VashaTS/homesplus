@@ -1,0 +1,11 @@
+{
+	"required": true,
+	"package": "com.sethome.test.mixin",
+	"compatibilityLevel": "JAVA_25",
+	"mixins": [
+		"ServerPlayerChatCaptureMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

@@ -120,15 +120,9 @@ public class SetHomeMod implements ModInitializer {
 		storage.setHome(player.getUUID(), name, data);
 		String dim = friendlyDimName(data.dimension());
 		if (HomeStorage.DEFAULT_HOME.equals(name)) {
-			source.sendSuccess(
-				() -> Component.literal(String.format("§aHome set at §f(%.1f, %.1f, %.1f)§a in §f%s§a.", pos.x, pos.y, pos.z, dim)),
-				false
-			);
+			sendMessage(source, Component.literal(String.format("§aHome set at §f(%.1f, %.1f, %.1f)§a in §f%s§a.", pos.x, pos.y, pos.z, dim)));
 		} else {
-			source.sendSuccess(
-				() -> Component.literal(String.format("§aHome §f%s§a set at §f(%.1f, %.1f, %.1f)§a in §f%s§a.", name, pos.x, pos.y, pos.z, dim)),
-				false
-			);
+			sendMessage(source, Component.literal(String.format("§aHome §f%s§a set at §f(%.1f, %.1f, %.1f)§a in §f%s§a.", name, pos.x, pos.y, pos.z, dim)));
 		}
 		return 1;
 	}
@@ -167,15 +161,9 @@ public class SetHomeMod implements ModInitializer {
 		player.teleportTo(targetWorld, home.x(), home.y(), home.z(), Set.of(), home.yaw(), home.pitch(), true);
 		String dim = friendlyDimName(home.dimension());
 		if (HomeStorage.DEFAULT_HOME.equals(name)) {
-			source.sendSuccess(
-				() -> Component.literal(String.format("§aTeleported to your home at §f(%.1f, %.1f, %.1f)§a in §f%s§a.", home.x(), home.y(), home.z(), dim)),
-				false
-			);
+			sendMessage(source, Component.literal(String.format("§aTeleported to your home at §f(%.1f, %.1f, %.1f)§a in §f%s§a.", home.x(), home.y(), home.z(), dim)));
 		} else {
-			source.sendSuccess(
-				() -> Component.literal(String.format("§aTeleported to home §f%s§a at §f(%.1f, %.1f, %.1f)§a in §f%s§a.", name, home.x(), home.y(), home.z(), dim)),
-				false
-			);
+			sendMessage(source, Component.literal(String.format("§aTeleported to home §f%s§a at §f(%.1f, %.1f, %.1f)§a in §f%s§a.", name, home.x(), home.y(), home.z(), dim)));
 		}
 		return 1;
 	}
@@ -204,9 +192,9 @@ public class SetHomeMod implements ModInitializer {
 		}
 
 		if (HomeStorage.DEFAULT_HOME.equals(name)) {
-			source.sendSuccess(() -> Component.literal("§aDeleted your home."), false);
+			sendMessage(source, Component.literal("§aDeleted your home."));
 		} else {
-			source.sendSuccess(() -> Component.literal("§aDeleted home §f" + name + "§a."), false);
+			sendMessage(source, Component.literal("§aDeleted home §f" + name + "§a."));
 		}
 		return 1;
 	}
@@ -235,14 +223,11 @@ public class SetHomeMod implements ModInitializer {
 	private int executeReloadConfig(CommandContext<CommandSourceStack> ctx) {
 		SethomeConfig.get().loadOrCreate();
 		SethomeConfig config = SethomeConfig.get();
-		ctx.getSource().sendSuccess(
-			() -> Component.literal(String.format(
-				"§aReloaded sethome config (§fmaxHomes=%d§a, §fopsBypassLimit=%s§a).",
-				config.maxHomes(),
-				config.opsBypassLimit()
-			)),
-			true
-		);
+		sendMessage(ctx.getSource(), Component.literal(String.format(
+			"§aReloaded sethome config (§fmaxHomes=%d§a, §fopsBypassLimit=%s§a).",
+			config.maxHomes(),
+			config.opsBypassLimit()
+		)));
 		return 1;
 	}
 
@@ -288,12 +273,22 @@ public class SetHomeMod implements ModInitializer {
 		}
 	}
 
+
+	/**
+	 * Player-facing command output. {@link CommandSourceStack#sendSuccess} is
+	 * suppressed when the {@code sendCommandFeedback} gamerule is false, so
+	 * regular players would see no confirmation or /listhomes list.
+	 */
+	static void sendMessage(CommandSourceStack source, Component message) {
+		source.sendSystemMessage(message);
+	}
+
 	static int sendHomeList(CommandSourceStack source, String title, Map<String, HomeData> homes, boolean clickable) {
 		if (homes.isEmpty()) {
 			source.sendFailure(Component.literal("§cNo homes to list."));
 			return 0;
 		}
-		source.sendSuccess(() -> formatHomeList(title, homes, clickable), false);
+		sendMessage(source, formatHomeList(title, homes, clickable));
 		return homes.size();
 	}
 

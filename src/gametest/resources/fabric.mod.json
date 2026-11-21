@@ -6,10 +6,17 @@
 	"environment": "*",
 	"entrypoints": {
 		"fabric-gametest": [
-			"com.sethome.test.SetHomeGameTest"
+			"com.sethome.test.SetHomeGameTest",
+			"com.sethome.test.SetHomeFeedbackTest"
+		],
+		"fabric-client-gametest": [
+			"com.sethome.test.ListhomesScreenshotTest"
 		]
 	},
 	"depends": {
 		"sethome": "*"
-	}
+	},
+	"mixins": [
+		"sethome-test.mixins.json"
+	]
 }
