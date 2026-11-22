@@ -60,4 +60,4 @@ Requires JDK 25.
 ./gradlew build
 ```
 
-The jar is written to `build/libs/sethome-1.1.1.jar`.
+The jar is written to `build/libs/sethome-1.1.2.jar`.

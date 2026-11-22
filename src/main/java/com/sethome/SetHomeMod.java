@@ -275,12 +275,23 @@ public class SetHomeMod implements ModInitializer {
 
 
 	/**
+	 * Insertion tag on every player-facing Homes+ system message so client
+	 * filters such as No Text Wall can recognise and allow them.
+	 */
+	public static final String MESSAGE_MARKER = "homesplus";
+
+	/**
 	 * Player-facing command output. {@link CommandSourceStack#sendSuccess} is
 	 * suppressed when the {@code sendCommandFeedback} gamerule is false, so
 	 * regular players would see no confirmation or /listhomes list.
+	 * Messages are tagged with {@link #MESSAGE_MARKER} for client-side compatibility.
 	 */
 	static void sendMessage(CommandSourceStack source, Component message) {
-		source.sendSystemMessage(message);
+		source.sendSystemMessage(tagMessage(message));
+	}
+
+	static Component tagMessage(Component message) {
+		return message.copy().withStyle(style -> style.withInsertion(MESSAGE_MARKER));
 	}
 
 	static int sendHomeList(CommandSourceStack source, String title, Map<String, HomeData> homes, boolean clickable) {
